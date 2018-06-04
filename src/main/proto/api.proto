@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.mh.flux.api";
+option java_outer_classname = "FluxAPIProto";
+option objc_class_prefix = "FLUX";
+
+import "commonRequestHeader.proto";
+import "commonResponseHeader.proto";
+
+service topupService {
+  rpc topup (topupRequest) returns (topupResponse) {}
+  
+  rpc queryBalance (queryBalanceRequest) returns (queryBalanceResponse) {}
+  
+  rpc queryResult (queryResultRequest) returns (queryResultResponse) {}
+}
+
+message topupRequest
+{
+  reqHeader header = 1;
+  message payloadBody {
+    string user = 1;
+    int32 scope = 2;
+    string orderno = 3;
+    string mobile = 4;
+    int32 activeflag = 5;
+    int32 expiration = 6;
+    int32 fluxnum = 7;
+    string pcode = 8;
+  }
+  payloadBody payload = 2;
+}
+message topupResponse
+{
+  respHeader header = 1;
+  message payloadBody {
+    string orderid = 1;
+  }
+  payloadBody payload = 2;
+}
+
+message queryResultRequest
+{
+  reqHeader header = 1;
+  message payloadBody {
+    string orderid = 1;
+  }
+  payloadBody payload = 2;
+}
+message queryResultResponse
+{
+  respHeader header = 1;
+  message payloadBody {
+    int32 result = 1;
+    string desc = 2;
+  }
+  payloadBody payload = 2;
+}
+
+message queryBalanceRequest
+{
+  reqHeader header = 1;
+  message payloadBody {
+    string user = 1;
+  }
+  payloadBody payload = 2;
+}
+message queryBalanceResponse
+{
+  respHeader header = 1;
+  message payloadBody {
+    string balance = 1;
+    string currency = 2;
+  }
+  payloadBody payload = 2;
+}
